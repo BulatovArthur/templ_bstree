@@ -65,7 +65,7 @@ namespace BSTree {
 	}
 
 	template <typename type>
-	Tree<type>::Tree(const Tree& tree) : root(nullptr) {
+	Tree<type>::Tree(const Tree<type>& tree) : root(nullptr) {
 		Appropriation(tree.root);
 	}
 
@@ -362,9 +362,20 @@ namespace BSTree {
 
 	template <typename type>
 	auto Tree<type>::operator=(const Tree<type>&) -> Tree& {
-		Clear(this->root);
-    		Appropriation(root);
-    		return *this;
+		Node<type> *ptr  = nullptr;
+        	try {
+                	ptr->left = new Node(*tree.root->left);
+                	ptr->right = new Node(*tree.root->right);
+        	}
+        	catch(...) {
+                	delete ptr;
+                	throw;
+        	}
+        	this->root->data = tree.root->data;
+        	swap(root->left, ptr->left);
+        	swap(root->right, ptr->right);
+        	delete ptr;
+        	return *this;
 	}
 
 	template <typename type>
