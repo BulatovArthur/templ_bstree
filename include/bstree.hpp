@@ -361,19 +361,19 @@ namespace BSTree {
 	}
 
 	template <typename type>
-	auto Tree<type>::operator=(const Tree<type>&) -> Tree& {
+	auto Tree<type>::operator=(const Tree<type>& tree) -> Tree& {
 		Node<type> *ptr  = nullptr;
         	try {
-                	ptr->left = new Node(*tree.root->left);
-                	ptr->right = new Node(*tree.root->right);
+                	ptr->left = new Node<type>(*tree.root->left);
+                	ptr->right = new Node<type>(*tree.root->right);
         	}
         	catch(...) {
                 	delete ptr;
                 	throw;
         	}
         	this->root->data = tree.root->data;
-        	swap(root->left, ptr->left);
-        	swap(root->right, ptr->right);
+        	swap(this->root->left, ptr->left);
+        	swap(this->root->right, ptr->right);
         	delete ptr;
         	return *this;
 	}
